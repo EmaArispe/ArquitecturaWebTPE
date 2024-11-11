@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.BadRequestException;
 import org.example.microservmaintenance.error.exception.NotExistsException;
 import org.example.microservmaintenance.error.dto.MessageDTO;
-import org.example.microservmaintenance.error.exception.BadRiquestException;
+import org.example.microservmaintenance.error.exception.RequestBadException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NotExistsException.class})
-    public ResponseEntity<?> handlerNotExistsExcepion(NotExistsException ex, HttpServletRequest request){
+    public ResponseEntity<?> handlerNotExistsException(NotExistsException ex, HttpServletRequest request){
         return ResponseEntity.status(HttpStatus.CONFLICT)
                              .body(MessageDTO.builder()
                                              .message(ex.getMessage())
@@ -23,8 +23,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                              .status(HttpStatus.CONFLICT).build());
     }
 
-    @ExceptionHandler({BadRiquestException.class})
-    public ResponseEntity<?> handlerBadRequestExcepion(BadRequestException ex, HttpServletRequest request){
+    @ExceptionHandler({RequestBadException.class})
+    public ResponseEntity<?> handlerBadRequestException(BadRequestException ex, HttpServletRequest request){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(MessageDTO.builder()
                         .message(ex.getMessage())
